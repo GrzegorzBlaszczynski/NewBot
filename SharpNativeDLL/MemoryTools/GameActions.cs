@@ -1,8 +1,5 @@
 ﻿using CodeInject.Actors;
-using SharpNativeDLL;
-using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.Numerics;
 using System.Runtime.InteropServices;
 
@@ -18,8 +15,9 @@ namespace CodeInject.MemoryTools
         private delegate void UseQuickAction(long cQuickBarAddr, int key);
         private delegate void UseItemAction(long itemAdr);
         private delegate void NormalAttackAction(long networkClass, int enemy);
-        private delegate void MoveToAction(long networkClass, int unknow0,float* destinationPoint);
+        private delegate void MoveToAction(long thisArg, int unknow0, float* destinationPoint);
         private delegate void TalkWithNPC(long arg0, ushort npcIndex);
+        private delegate void RepairItemAction(long networkClass, int itemNetID, int itemNetID2);
 
         private delegate void PacketSendDelegate(long arg0, byte* packet);
 
@@ -35,6 +33,7 @@ namespace CodeInject.MemoryTools
         private MoveToAction MoveToPointFunc;
         private TalkWithNPC TalkToNPCFunc;
         private PacketSendDelegate SendPacketFunc;
+        private RepairItemAction RepairItemFunc;
 
         public Log LoggerFunc;
         private long BaseAddres;
@@ -58,15 +57,17 @@ namespace CodeInject.MemoryTools
 
             NormalAttackFunc = (NormalAttackAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("48 8b cf e8 ?? ?? ?? ?? 84 c0 0f 84 ?? ?? ?? ?? 40 84 f6 0f 84 ?? ?? ?? ?? 48 8b 0d ?? ?? ?? ?? 8b d3 48 81 c1 ?? ?? ?? ?? e8 ?? ?? ?? ??"), typeof(NormalAttackAction));
 
-          //  MoveToPointFunc = (MoveToAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("48 8b cf e8 ?? ?? ?? ?? 84 c0 ?? ?? ?? ?? ?? ?? 48 8b 0d ?? ?? ?? ?? 4c 8b c6 48 81 c1 ?? ?? ?? ?? 33 d2 e8 ?? ?? ?? ??"), typeof(MoveToAction));
+            MoveToPointFunc = (MoveToAction)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres+0x5d3970), typeof(MoveToAction));
+            RepairItemFunc = (RepairItemAction)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x5d52a0), typeof(RepairItemAction));
 
             PickUpFunc = (PickUpAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("48 85 f6 74 ?? 48 8b 06 48 8b ce 48 8b 1d ?? ?? ?? ?? ff 50 ?? 0f bf 56 ?? 48 8d 8b ?? ?? ?? ?? 4c 8b c0 e8 ?? ?? ?? ??"), typeof(PickUpAction)); //MSG#INV4*/
+
         }
 
 
         public void Logger(string text, int chatType = 5)
         {
-            LoggerFunc(BaseAddres+0x14b1d80, text, chatType, Color.LimeGreen.ToArgb());
+           
         }
 
 
@@ -75,6 +76,11 @@ namespace CodeInject.MemoryTools
         {
             long r8 = (itemPointer) +0x10;
             PickUpFunc((*(long*)(BaseNetworkClass) + 0x16b8), itemID, r8);
+        }
+
+        public void RepairItem(int itemNetID, int itemNetID2)
+        {
+            RepairItemFunc((*(long*)(BaseNetworkClass) + 0x16b8), itemNetID, itemNetID2);
         }
 
 
@@ -92,7 +98,10 @@ namespace CodeInject.MemoryTools
             }
         }
 
-
+        //RCX trose.exe+17C04B8
+        //RDX 0x4
+        //r8 0
+        //float[3]
         public void MoveToPoint(Vector2 position)
         {
             Logger($"Go to: {position.ToString()}");

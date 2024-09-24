@@ -86,6 +86,10 @@ namespace Winebotv2.MemoryTools
             LuigiPipe.Instance.SendProcedure($"PICKUP;{item.ObjectPointer};{item.ID}");
         }
 
+        public void RepairItem(InvItem RepairingItem, InvItem Item2Repair)
+        {
+            LuigiPipe.Instance.SendProcedure($"REPAIR;{RepairingItem.NetworkID};{Item2Repair.NetworkID}");
+        }
 
         public void CastSpell(IObject target, int skillIndex)
         {
@@ -95,15 +99,7 @@ namespace Winebotv2.MemoryTools
 
         public void MoveToPoint(Vector2 position)
         {
-            Logger($"Go to: {position.ToString()}");
-            float[] position2float = new float[]
-            {
-                position.X*100, position.Y*100,0
-            };
-            fixed (float* p = position2float)
-            {
-                MoveToPointFunc((*(long*)BaseNetworkClass) + 0x16b8, 0, p);
-            }
+            LuigiPipe.Instance.SendProcedure($"MOVETO;{position.X};{position.Y}");
         }
 
         public void CastSpell(int skillIndex)

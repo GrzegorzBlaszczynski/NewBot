@@ -9,6 +9,9 @@ namespace Winebotv2
         public long ObjectPointer { get; set; }
         public long CItemAddr { get; set; }
         public short ItemData { get; set; }
+        public int NetworkID { get; set; }
+        public int Dubaribility { get; set; }
+        public int MaxDubaribility { get; set; }
 
         /// <summary>
         /// 0x08 Weapon
@@ -26,6 +29,11 @@ namespace Winebotv2
         {
             ObjectPointer = ItemDBAddr;
             CItemAddr = cItemAddr;
+            NetworkID = Rudy.Instance.ReadInt(new System.UIntPtr((ulong)ObjectPointer + 0x48));
+
+            Dubaribility = (short)Rudy.Instance.ReadUShort(new System.UIntPtr((ulong)ItemDBAddr + 0xD48));
+
+            MaxDubaribility = (short)Rudy.Instance.ReadUShort(new System.UIntPtr((ulong)ItemDBAddr + 0x258));
 
             ItemData = (short)Rudy.Instance.ReadUShort(new System.UIntPtr((ulong)ItemDBAddr + 0x0c));
             ItemType = (short)Rudy.Instance.ReadUShort(new System.UIntPtr((ulong)ItemDBAddr + 0x08));
@@ -57,52 +65,52 @@ namespace Winebotv2
                 case 0x08:
                     {
                         temp = DataBase.GameDataBase.WeaponItemsDatabase.FirstOrDefault(x => x.ID == ItemData);
-                        return $"{(temp != null ? temp.ID+ " "+ temp.Name : "Unknow")}";
+                        return $"{(temp != null ? temp.ID+ " o:"+ ObjectPointer.ToString("X")+ " "+ temp.Name : "Unknow")}";
                     }
 
                 case 0x0A:
                     {
                         temp = DataBase.GameDataBase.UsableItemsDatabase.FirstOrDefault(x => x.ID == ItemData);
-                        return $" {(temp != null ? temp.ID + " " + ((UsableItemsInfo)temp).DisplayName : " Unknow")}";
+                        return $" {(temp != null ? temp.ID + " " + CItemAddr.ToString("X") + " " + ((UsableItemsInfo)temp).DisplayName : " Unknow")}";
                     }
 
                 case 0x03:
                     {
                         temp = DataBase.GameDataBase.BodyItemsDatabase.FirstOrDefault(x => x.ID == ItemData);
-                        return $"{(temp != null ? temp.ID + " " + temp.Name : temp.ID  + " Unknow")}";
+                        return $"{(temp != null ? temp.ID + " " + CItemAddr.ToString("X") + " " + temp.Name : temp.ID  + " Unknow")}";
                     }
 
                 case 0x05:
                     {
                         temp = DataBase.GameDataBase.FootItemsDatabase.FirstOrDefault(x => x.ID == ItemData);
-                        return $"{(temp != null ? temp.ID + " " + temp.Name : "Unknow")}";
+                        return $"{(temp != null ? temp.ID + " c:" + CItemAddr.ToString("X") + " " + temp.Name : "Unknow")}";
                     }
 
                 case 0x04:
                     {
                         temp = DataBase.GameDataBase.ArmItemsDatabase.FirstOrDefault(x => x.ID == ItemData);
-                        return $"{(temp != null ? temp.ID + " " + temp.Name : "Unknow")}";
+                        return $"{(temp != null ? temp.ID + " " + CItemAddr.ToString("X") + " " + temp.Name : "Unknow")}";
                     }
                 case 0x09:
                     {
                         temp = DataBase.GameDataBase.SheildItemsDatabase.FirstOrDefault(x => x.ID == ItemData);
-                        return $"{(temp != null ? temp.ID + " " + temp.Name : "Unknow")}";
+                        return $"{(temp != null ? temp.ID + " " + CItemAddr.ToString("X") + " " + temp.Name : "Unknow")}";
                     }
                 case 0x0B:
                     {
                         temp = DataBase.GameDataBase.GemItemsDatabase.FirstOrDefault(x => x.ID == ItemData);
-                        return $"{(temp != null ? temp.ID + " " + temp.Name : "Unknow")}";
+                        return $"{(temp != null ? temp.ID + " " + CItemAddr.ToString("X") + " " + temp.Name : "Unknow")}";
                     }
 
                 case 0x0C:
                     {
                         temp = DataBase.GameDataBase.MaterialItemsDatabase.FirstOrDefault(x => x.ID == ItemData);
-                        return $"{(temp != null ? temp.ID + " " + temp.Name : "Unknow")}";
+                        return $"{(temp != null ? temp.ID + " " + CItemAddr.ToString("X") + " " + CItemAddr + " " + temp.Name : "Unknow")}";
                     }
                 case 0x07:
                     {
                         temp = DataBase.GameDataBase.AccesoriesItemsDatabase.FirstOrDefault(x => x.ID == ItemData);
-                        return $"{(temp != null ? temp.ID + " " + temp.Name : "Unknow")}";
+                        return $"{(temp != null ? temp.ID + " " + CItemAddr.ToString("X") + " " + temp.Name : "Unknow")}";
                     }
                 default:
                     {

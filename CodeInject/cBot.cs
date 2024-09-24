@@ -1,7 +1,6 @@
 ﻿using Winebotv2.Actors;
 using Winebotv2.BotStates;
 using Winebotv2.Hunt;
-using Winebotv2.MemoryTools;
 using Winebotv2.Modules;
 using Winebotv2.PickupFilters;
 using System;
@@ -9,18 +8,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
 using System.Windows.Forms;
-using System.Drawing;
-using Winebotv2.AutoWalk;
 using Winebotv2.UIPanels;
 using Winebotv2.UIPanels.Module_Panels;
-
-using Point = AForge.Point;
 using System.IO;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Net.Security;
-using Reloaded.Injector;
+using Winebotv2.MemoryTools;
 
 namespace Winebotv2
 {
@@ -100,6 +92,8 @@ namespace Winebotv2
             lNearItemsList.Items.Clear();
             listBox1.Items.AddRange(NPC.GetNPCsList().ToArray());
             lNearItemsList.Items.AddRange(Player.GetPlayer.GetAllItemsAroundPlayerList().ToArray());
+            Random rand = new Random();
+            timer2.Interval = rand.Next(500, 1000);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -131,13 +125,13 @@ namespace Winebotv2
         private void cbHealHPItem_DropDown(object sender, EventArgs e)
         {
             cbHealHPItem.Items.Clear();
-            cbHealHPItem.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(cbHealHPItem.Items.OfType<InvItem>().ToList()).ToArray());
+            cbHealHPItem.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(cbHealHPItem.Items.OfType<InvItem>().ToList()).Where(x=>x.ItemType==0xA).ToArray());
         }
 
         private void cbHealMPItem_DropDown(object sender, EventArgs e)
         {
             cbHealMPItem.Items.Clear();
-            cbHealMPItem.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(cbHealMPItem.Items.OfType<InvItem>().ToList()).ToArray());
+            cbHealMPItem.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(cbHealMPItem.Items.OfType<InvItem>().ToList()).Where(x => x.ItemType == 0xA).ToArray());
         }
 
 
@@ -854,6 +848,60 @@ namespace Winebotv2
 
                 e.Handled = true;
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                FollowModule followmodule;
+                followmodule = BotContext.GetModule<FollowModule>("FOLLOW");
+
+                if (followmodule == null)
+                {
+                    followmodule = new FollowModule((comboBox1.SelectedItem as OtherPlayer).Name);
+                    BotContext.AddModule(followmodule);
+                }
+            }
+            else
+            {
+                BotContext.RemoveModule("FOLLOW");
+            }
+
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            cbHealHPItem.Items.Clear();
+            cbHealHPItem.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(cbHealHPItem.Items.OfType<InvItem>().ToList()).ToArray());
+
+        }
+
+
+
+        private void comboBox7_DropDown_1(object sender, EventArgs e)
+        {
+            comboBox7.Items.Clear();
+            comboBox7.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(new List<InvItem>()).ToArray());
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            listBox6.Items.Clear();
+            listBox6.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(new List<InvItem>()).ToArray());
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            if (listBox6.SelectedItem == null || item2RepairList.Items.OfType<InvItem>().Any(x=>x.ObjectPointer == (listBox6.SelectedItem as InvItem).ObjectPointer)) return;
+
+            item2RepairList.Items.Add(listBox6.SelectedItem);
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            if (item2RepairList.SelectedItem == null) return;
+            item2RepairList.Items.Remove(item2RepairList.SelectedItem);
         }
     }
 }

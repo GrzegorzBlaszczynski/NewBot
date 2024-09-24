@@ -30,6 +30,17 @@ namespace Winebotv2.MemoryTools
             Init();
 
         }
+
+        public Player GetPlayerFromStaticADDr
+        {
+
+            get
+            {
+                return new Player(Rudy.Instance.ReadULong(new UIntPtr((ulong)BaseAddres + 0x17BE6F0)));
+            }
+        }
+
+
         private void Init()
         {
            Process _proc = Process.GetCurrentProcess();
@@ -47,7 +58,6 @@ namespace Winebotv2.MemoryTools
             {
                 if (item.ToUInt64() != 0x0)
                 {
-                    //SERRRRR
                     InvItem inv = new InvItem((long)GameHackFunc.Game.ClientData.GetInventoryItemDetails(item.ToUInt64()), (long)item.ToUInt64());
                     invDescriptions.Add(inv);
                 }
@@ -78,7 +88,6 @@ namespace Winebotv2.MemoryTools
             {
                 if (item.ToUInt64() != 0x0)
                 {
-                    //SERRRRR
                     InvItem inv = new InvItem((long)GameHackFunc.Game.ClientData.GetInventoryItemDetails((item.ToUInt64())), (long)item.ToUInt64());
                     invDescriptions.Add(inv);
                 }
@@ -87,7 +96,8 @@ namespace Winebotv2.MemoryTools
             //ADD NEW
             foreach (InvItem item in invDescriptions)
             {
-                if (item.ItemType == 0xA && !currentList.Any(x => (long)x.ObjectPointer == (long)item.ObjectPointer))
+                //if (item.ItemType == 0xA && !currentList.Any(x => (long)x.ObjectPointer == (long)item.ObjectPointer))
+                if (!currentList.Any(x => (long)x.ObjectPointer == (long)item.ObjectPointer))
                 {
                     currentList.Add(item);
                 }
@@ -144,7 +154,7 @@ namespace Winebotv2.MemoryTools
 
             ulong adrPtr1 = Rudy.Instance.ReadULong(new UIntPtr((ulong)PlayerAddres)); //2023.10.04
 
-            int s = 0;
+           
             int index = 0;
 
 
@@ -152,8 +162,6 @@ namespace Winebotv2.MemoryTools
 
             while (skillId != 0)//OBS#S2
             {
-                skillId = Rudy.Instance.ReadUShort(new UIntPtr(adrPtr1) + 0x50 + 0xb68 + index*2);
-
                 SkillInfo skill = DataBase.GameDataBase.SkillDatabase.FirstOrDefault(x => x.ID == skillId);
                 if (skill == null)
                 {
@@ -165,30 +173,54 @@ namespace Winebotv2.MemoryTools
                 }
                 skillList.Add(new Skills(skill, SkillTypes.Unknow) { SkillIndex = index});
                 index++;
-                s++;
+                skillId = Rudy.Instance.ReadUShort(new UIntPtr(adrPtr1) + 0x50 + 0xb68 + index * 2);
             }
 
+            adrPtr1 = Rudy.Instance.ReadULong(new UIntPtr((ulong)PlayerAddres)); //2023.10.04
+            ulong uniqueskillsAddr = adrPtr1+ 0x50 + 0xb68;
+            uniqueskillsAddr += 0x1F8;
 
-        //    ushort* uniqueSkill = (ushort*)(*adrPtr1 + 0xFC * 2 + 0xBB8);
-        /*
-            index = 0xFC;
+            index = 0x1F8;
 
-            while (*uniqueSkill!=0)
+            ushort uniqueSkillID = Rudy.Instance.ReadUShort(new UIntPtr(uniqueskillsAddr));
+
+            while (uniqueSkillID != 0)
             {
-                SkillInfo skill = DataBase.GameDataBase.SkillDatabase.FirstOrDefault(x => x.ID == *uniqueSkill);
+                SkillInfo skill = DataBase.GameDataBase.SkillDatabase.FirstOrDefault(x => x.ID == uniqueSkillID);
                 if (skill == null)
                 {
                     skill = new SkillInfo()
                     {
-                        ID = *uniqueSkill,
+                        ID = uniqueSkillID,
                         Name = "Unknow"
                     };
                 }
                 skillList.Add(new Skills(skill, SkillTypes.Unknow) { SkillIndex = index });
                 index++;
-                uniqueSkill++;
+                uniqueskillsAddr+=2;
+                uniqueSkillID = Rudy.Instance.ReadUShort(new UIntPtr(uniqueskillsAddr));
             }
-        */
+
+            // ushort* uniqueSkill = (ushort*)(*adrPtr1 + 0xFC * 2 + 0xBB8);
+            /*
+                index = 0xFC;
+
+                while (*uniqueSkill!=0)
+                {
+                    SkillInfo skill = DataBase.GameDataBase.SkillDatabase.FirstOrDefault(x => x.ID == *uniqueSkill);
+                    if (skill == null)
+                    {
+                        skill = new SkillInfo()
+                        {
+                            ID = *uniqueSkill,
+                            Name = "Unknow"
+                        };
+                    }
+                    skillList.Add(new Skills(skill, SkillTypes.Unknow) { SkillIndex = index });
+                    index++;
+                    uniqueSkill++;
+                }
+            */
 
             return skillList;
         }
@@ -203,18 +235,13 @@ namespace Winebotv2.MemoryTools
 
             ulong ObjectTypeFuncTable = Rudy.Instance.ReadULong(new UIntPtr(wskObj));
 
-            //Player 7FF6039B6F98; NPC 00007FF6039B4D58
 
-            //0x1059060
-               /* if (GameHackFunc.Game.ClientData.BaseAddres + Addreses[0]  == ObjectTypeFuncTable)
-                      return new OtherPlayer(wskObj);*/
-            //0x11C 6F98
             if ((ulong)GameHackFunc.Game.ClientData.BaseAddres+ 0x11C6F98 == ObjectTypeFuncTable) // player avatar
                      return new Player(wskObj);
             //0x11C 4D58 11C 45C0
-            if ((ulong)GameHackFunc.Game.ClientData.BaseAddres + 0x11C45C0 == ObjectTypeFuncTable) // mobs and npcs
+            if ((ulong)GameHackFunc.Game.ClientData.BaseAddres + 0x11C45C0 == ObjectTypeFuncTable) 
                   return new NPC(wskObj);
-            if ((ulong)GameHackFunc.Game.ClientData.BaseAddres + 0x11C4D58 == ObjectTypeFuncTable) // mobs and npcs
+            if ((ulong)GameHackFunc.Game.ClientData.BaseAddres + 0x11C4D58 == ObjectTypeFuncTable) 
                 return new NPC(wskObj);
 
 
@@ -224,25 +251,20 @@ namespace Winebotv2.MemoryTools
 
         public Player GetPlayer()
         {
-            ulong wsp = (Rudy.Instance.ReadULong(new UIntPtr((ulong)GameBaseAddres)) + 0x22058 + 0x8);
-            ulong aadr = Rudy.Instance.ReadULong(new UIntPtr(wsp));
-          //  int index1 = Rudy.Instance.ReadInt(new IntPtr(aadr));
-            return (Player)GetObject(Rudy.Instance.ReadInt(new UIntPtr(aadr)));
+            // ulong wsp = (Rudy.Instance.ReadULong(new UIntPtr((ulong)GameBaseAddres)) + 0x22058 + 0x8);
+            // ulong aadr = Rudy.Instance.ReadULong(new UIntPtr(wsp));
+            return GetPlayerFromStaticADDr;// (Player)GetObject(Rudy.Instance.ReadInt(new UIntPtr(aadr)));
         }
         public List<IObject> GetNPCs()
         {
 
                 List<IObject> wholeNpcList = new List<IObject>();
-                // Oryginalcode
-                //  long* wsp = (long*)(*(long*)(GameBaseAddres) + 0x22058);//OBS#S3
 
                 ulong wsp = (Rudy.Instance.ReadULong(new UIntPtr((ulong)GameBaseAddres)) + 0x22058 + 0x8);
                 ulong aadr = Rudy.Instance.ReadULong(new UIntPtr(wsp));
 
 
 
-                //   int* monsterIDList = (int*)*wsp;
-                //   int* count = (int*)(*(long*)(GameBaseAddres) + 0x2A088);//OBS#S4
                 int cout = Rudy.Instance.ReadInt(new UIntPtr(Rudy.Instance.ReadULong(new UIntPtr((ulong)GameBaseAddres)) + 0x2A090));
 
                 for (int i = 0; i < cout; i++)
@@ -254,7 +276,6 @@ namespace Winebotv2.MemoryTools
                     if(obj != null)
                     wholeNpcList.Add(obj);
 
-                  //  monsterIDList++;
                 }
 
                 var sortedList = wholeNpcList.OrderBy(x => x.CalcDistance(wholeNpcList[0]));
@@ -270,7 +291,7 @@ namespace Winebotv2.MemoryTools
 
             string[] separatedData = result.Split(';');
 
-            return ulong.Parse(separatedData[1]);// getInventoryItemDetailsFunc(cItemAddres);
+            return ulong.Parse(separatedData[1]);
         }
 
 
@@ -279,9 +300,9 @@ namespace Winebotv2.MemoryTools
         {
             List<UIntPtr> inventorySlotAddrs = new List<UIntPtr>();
 
-            //   long* startList = (long*)(*(long*)((long)GameHackFunc.Game.ClientData.GetPlayer().ObjectPointer +0x6968));//MSG#INV4
 
-            long playerAddr = GetPlayer().ObjectPointer;
+            long playerAddr = GetPlayer().ObjectPointer;//MSG#INV4
+
             ulong startList = Rudy.Instance.ReadULong(new UIntPtr( (ulong)(GetPlayer().ObjectPointer + 0x6968)));
 
             for (long itemIndex = 0; itemIndex < 139; itemIndex++)
@@ -297,8 +318,8 @@ namespace Winebotv2.MemoryTools
         {
 
             List<IntPtr> inventorySlotAddrs = new List<IntPtr>();
-            //movsxd rax, dword ptr [rdi+000001B0]
-            int itemIndexStart = page * 0x1e; //0x1e max page Size
+
+            int itemIndexStart = page * 0x1e; 
 
             long i = 0;
             for (long itemIndex = itemIndexStart; itemIndex < itemIndexStart + 0x1e; itemIndex++)
@@ -329,7 +350,7 @@ namespace Winebotv2.MemoryTools
                 ulong itemAddr = Rudy.Instance.ReadULong(new UIntPtr((RDI + (ulong)(Rudy.Instance.ReadUShort(new UIntPtr(RBX))) * 8) + 0x22090));
                 Item nearItem = new Item(itemAddr);
                 itemList.Add(nearItem);
-                // (long*)*((long*)((long)RBX+0x8));
+
                 RBX = Rudy.Instance.ReadULong(new UIntPtr(RBX+0x8));
             }
 

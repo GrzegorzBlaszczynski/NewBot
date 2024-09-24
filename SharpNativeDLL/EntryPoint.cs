@@ -26,62 +26,83 @@ namespace SharpNativeDLL
 
                     //AllocConsole();
                     Console.WriteLine("RUN");
-                    using (var server = new NamedPipeServerStream($"Luigi{System.Diagnostics.Process.GetCurrentProcess().Id}", PipeDirection.InOut))
+                    while (true)
                     {
-
-                        Console.WriteLine("Waiting for client...");
-                        server.WaitForConnection();
-                        Console.WriteLine("Client connected!");
-                        using (var reader = new StreamReader(server))
-                        using (var writer = new StreamWriter(server))
+                        var server = new NamedPipeServerStream($"Luigi{System.Diagnostics.Process.GetCurrentProcess().Id}", PipeDirection.InOut);
+                        try
                         {
-                            writer.WriteLine(GameHackFunc.Game.ClientData.ToString());
-                            writer.Flush();
-
-                            Console.WriteLine("Send message,");
-                            while (true)
+                            Console.WriteLine("Waiting for client...");
+                            server.WaitForConnection();
+                            Console.WriteLine("Client connected!");
+                            using (var reader = new StreamReader(server))
+                            using (var writer = new StreamWriter(server))
                             {
-                                string receivedData = reader.ReadLine();
+                                writer.WriteLine(GameHackFunc.Game.ClientData.ToString());
+                                writer.Flush();
 
-                                Console.WriteLine("Recived message,");
-                                if (receivedData.Contains("GETITEMDETAILS"))
+                                Console.WriteLine("Send message,");
+                                while (true)
                                 {
-                                    string[] commandData = receivedData.Split(';');
+                                    string receivedData = reader.ReadLine();
 
-                                    long result = GameHackFunc.Game.ClientData.GetInventoryItemDetails(long.Parse(commandData[1]));
-                                    Console.WriteLine($"Process items {result.ToString("X")}");
-                                    writer.WriteLine($"ITEMDETAILS;{result}");
-                                    writer.Flush();
-                                }
-                                else if(receivedData.Contains("ATTACKTARGET"))
-                                {
-                                    string[] commandData = receivedData.Split(';');
-                                    GameHackFunc.Game.Actions.Attack(int.Parse(commandData[1]));
-                                }
-                                else if (receivedData.Contains("CASTSPELLONTARGET"))
-                                {
-                                    string[] commandData = receivedData.Split(';');
-                                    GameHackFunc.Game.Actions.CastSpell(int.Parse(commandData[1]), int.Parse(commandData[2]));
-                                }
-                                else if (receivedData.Contains("CASTBUFF"))
-                                {
-                                    string[] commandData = receivedData.Split(';');
-                                    GameHackFunc.Game.Actions.CastSpell(int.Parse(commandData[1]));
-                                }
+                                    Console.WriteLine("Recived message,");
+                                    if (receivedData.Contains("GETITEMDETAILS"))
+                                    {
+                                        string[] commandData = receivedData.Split(';');
 
-                                else if (receivedData.Contains("PICKUP"))
-                                {
-                                    string[] commandData = receivedData.Split(';');
-                                    GameHackFunc.Game.Actions.PickUp(long.Parse(commandData[1]), int.Parse(commandData[2]));
-                                }
-                                else if (receivedData.Contains("USEITEM"))
-                                {
-                                    string[] commandData = receivedData.Split(';');
-                                    GameHackFunc.Game.Actions.ItemUse(long.Parse(commandData[1]));
+                                        long result = GameHackFunc.Game.ClientData.GetInventoryItemDetails(long.Parse(commandData[1]));
+                                        Console.WriteLine($"Process items {result.ToString("X")}");
+                                        writer.WriteLine($"ITEMDETAILS;{result}");
+                                        writer.Flush();
+                                    }
+                                    else if (receivedData.Contains("ATTACKTARGET"))
+                                    {
+                                        string[] commandData = receivedData.Split(';');
+                                        GameHackFunc.Game.Actions.Attack(int.Parse(commandData[1]));
+                                    }
+                                    else if (receivedData.Contains("CASTSPELLONTARGET"))
+                                    {
+                                        string[] commandData = receivedData.Split(';');
+                                        GameHackFunc.Game.Actions.CastSpell(int.Parse(commandData[1]), int.Parse(commandData[2]));
+                                    }
+                                    else if (receivedData.Contains("CASTBUFF"))
+                                    {
+                                        string[] commandData = receivedData.Split(';');
+                                        GameHackFunc.Game.Actions.CastSpell(int.Parse(commandData[1]));
+                                    }
+
+                                    else if (receivedData.Contains("PICKUP"))
+                                    {
+                                        string[] commandData = receivedData.Split(';');
+                                        GameHackFunc.Game.Actions.PickUp(long.Parse(commandData[1]), int.Parse(commandData[2]));
+                                    }
+                                    else if (receivedData.Contains("USEITEM"))
+                                    {
+                                        string[] commandData = receivedData.Split(';');
+                                        GameHackFunc.Game.Actions.ItemUse(long.Parse(commandData[1]));
+                                    }
+                                    else if (receivedData.Contains("MOVETO"))
+                                    {
+                                        string[] commandData = receivedData.Split(';');
+                                        GameHackFunc.Game.Actions.MoveToPoint(new System.Numerics.Vector2(float.Parse(commandData[1]), float.Parse(commandData[2])));
+                                    }
+                                    else if (receivedData.Contains("REPAIR"))
+                                    {
+                                        string[] commandData = receivedData.Split(';');
+                                        GameHackFunc.Game.Actions.RepairItem(int.Parse(commandData[1]), int.Parse(commandData[2]));
+                                    }
                                 }
                             }
                         }
+                        catch (IOException ioEx)
+                        {
+                            if (ioEx.Message.Contains("Pipe is broken"))
+                            {
+                                Console.WriteLine("Pipe is broken! Próba ponownego połączenia...");
+                            };
+                        }
                     }
+
                     break;
                 default:
                     break;

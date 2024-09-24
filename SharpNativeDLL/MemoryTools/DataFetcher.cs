@@ -1,11 +1,6 @@
 ﻿using CodeInject.Actors;
 using CodeInject.Party;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CodeInject.MemoryTools
@@ -29,6 +24,8 @@ namespace CodeInject.MemoryTools
             Init();
         }
 
+
+    
 
         public override string ToString()
         {
@@ -143,6 +140,7 @@ namespace CodeInject.MemoryTools
             return PartyMemberList;
         }
 
+
         public IObject GetObject(int id)
         {
             long* wskObj = (long*)((*(long*)(GameBaseAddres)) + (id * 8) + 0x22088+0x08); //OBS#N3
@@ -160,6 +158,11 @@ namespace CodeInject.MemoryTools
 
             return new OtherPlayer(wskObj);
         }
+
+        /// <summary>
+        /// Get Player
+        /// </summary>
+        /// <returns>Retruns player object.</returns>
         public Player GetPlayer()
         {
             long* wsp = (long*)(*(long*)(GameBaseAddres) + 0x22058+0x08);
@@ -167,6 +170,11 @@ namespace CodeInject.MemoryTools
 
             return (Player)GetObject(*monsterIDList);
         }
+
+        /// <summary>
+        /// Get NPC's
+        /// </summary>
+        /// <returns>Returns NPC/Player/OtherPlayers</returns>
         public List<IObject> GetNPCs()
         {
             try
@@ -195,10 +203,21 @@ namespace CodeInject.MemoryTools
             }
       
         }
+
+        /// <summary>
+        /// Function to get information about item.
+        /// </summary>
+        /// <param name="cItemAddres">Adress of item</param>
+        /// <returns>Address to details, use it with InvItem</returns>
         public long GetInventoryItemDetails(long cItemAddres)
         {
             return getInventoryItemDetailsFunc(cItemAddres);
         }
+
+        /// <summary>
+        /// Get items addresses from memory, to process it futher and get details use GetInventoryItemDetails
+        /// </summary>
+        /// <returns>Return addreses of items in inventory</returns>
         public List<IntPtr> getInventoryItems()
         {
             List<IntPtr> inventorySlotAddrs = new List<IntPtr>();
@@ -215,25 +234,11 @@ namespace CodeInject.MemoryTools
             }
             return inventorySlotAddrs;
         }
-        public List<IntPtr> getInventorySlots(int page,long dialogBoxAdr)
-        {
 
-            List<IntPtr> inventorySlotAddrs = new List<IntPtr>();
-            //movsxd rax, dword ptr [rdi+000001B0]
-            int itemIndexStart = page * 0x1e; //0x1e max page Size
-
-            long i = 0;
-            for (long itemIndex = itemIndexStart; itemIndex < itemIndexStart + 0x1e; itemIndex++)
-            {
-                long slotAddres = (itemIndexStart + i) * 0x168;
-                slotAddres += 0x2d78;
-                slotAddres += dialogBoxAdr;
-                Console.WriteLine($"{itemIndex.ToString("X")} {slotAddres.ToString("X")}");
-                inventorySlotAddrs.Add(new IntPtr(slotAddres));
-                i++;
-            }
-            return inventorySlotAddrs;
-        }
+        /// <summary>
+        /// Gets all items around player
+        /// </summary>
+        /// <returns>Return item list</returns>
         public List<IObject> GetItemsAroundPlayerV2()
         {
             List<IObject> itemList = new List<IObject>();
