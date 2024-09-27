@@ -5,14 +5,7 @@ using Winebotv2.Hunt;
 using Winebotv2.MemoryTools;
 using Winebotv2.Modules;
 using Winebotv2.PickupFilters;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Security.Cryptography;
-using System.Windows.Forms;
-using static System.Windows.Forms.AxHost;
 
 namespace Winebotv2
 {

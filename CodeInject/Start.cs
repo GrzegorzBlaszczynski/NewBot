@@ -47,6 +47,7 @@ namespace Winebotv2
             }
         }
         long addr = 0;
+
         private void button2_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedItem == null) return;
@@ -61,6 +62,7 @@ namespace Winebotv2
             {
                 Rudy.Instance.OpenProcess(int.Parse(listBox1.SelectedItem.ToString()));
                 LuigiPipe.Instance.OpenPipe(int.Parse(listBox1.SelectedItem.ToString()));
+            
                 this.Close();
             }
         }

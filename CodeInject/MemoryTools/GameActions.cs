@@ -91,6 +91,13 @@ namespace Winebotv2.MemoryTools
             LuigiPipe.Instance.SendProcedure($"REPAIR;{RepairingItem.NetworkID};{Item2Repair.NetworkID}");
         }
 
+
+        public void PutItemToBuy(int slot, int count)
+        {
+            LuigiPipe.Instance.SendProcedure($"BUY;{slot};{count}");
+        }
+
+
         public void CastSpell(IObject target, int skillIndex)
         {
             LuigiPipe.Instance.SendProcedure($"CASTSPELLONTARGET;{target.ID};{skillIndex}");

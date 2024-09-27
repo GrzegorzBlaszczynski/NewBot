@@ -13,6 +13,7 @@ using Winebotv2.UIPanels;
 using Winebotv2.UIPanels.Module_Panels;
 using System.IO;
 using Winebotv2.MemoryTools;
+using CodeInject.Modules.Mods;
 
 namespace Winebotv2
 {
@@ -879,10 +880,10 @@ namespace Winebotv2
 
 
 
-        private void comboBox7_DropDown_1(object sender, EventArgs e)
+        private void comboBox7_DropDown(object sender, EventArgs e)
         {
             comboBox7.Items.Clear();
-            comboBox7.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(new List<InvItem>()).ToArray());
+            comboBox7.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(new List<InvItem>()).Where(x=>x.ItemType == 0x0A).ToArray());
         }
 
         private void button29_Click(object sender, EventArgs e)
@@ -891,17 +892,44 @@ namespace Winebotv2
             listBox6.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(new List<InvItem>()).ToArray());
         }
 
-        private void button30_Click(object sender, EventArgs e)
+        private void button30_Click_1(object sender, EventArgs e)
         {
             if (listBox6.SelectedItem == null || item2RepairList.Items.OfType<InvItem>().Any(x=>x.ObjectPointer == (listBox6.SelectedItem as InvItem).ObjectPointer)) return;
 
             item2RepairList.Items.Add(listBox6.SelectedItem);
         }
 
-        private void button31_Click(object sender, EventArgs e)
+        private void button31_Click_1(object sender, EventArgs e)
         {
             if (item2RepairList.SelectedItem == null) return;
             item2RepairList.Items.Remove(item2RepairList.SelectedItem);
+        }
+
+        private void cAutoRepair_CheckedChanged(object sender, EventArgs e)
+        {
+            if(cAutoRepair.Checked)
+            {
+                BotContext.AddModule(new AutoRepairModule(item2RepairList.Items.OfType<InvItem>().ToList(), comboBox7.SelectedItem as InvItem, int.Parse(tRepairProcentage.Text)));
+            }else
+            {
+                BotContext.RemoveModule("AUTOREPAIR");
+            }
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            listBox6.Items.Clear();
+            listBox6.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(new List<InvItem>()).ToArray());
+        }
+
+        private void tZHuntArea_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            GameHackFunc.Game.Actions.PutItemToBuy(int.Parse(textBox1.Text), 10);
         }
     }
 }

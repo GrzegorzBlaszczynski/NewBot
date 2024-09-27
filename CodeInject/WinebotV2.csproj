@@ -152,6 +152,7 @@
     <Compile Include="MemoryTools\LuigiPipe.cs" />
     <Compile Include="MemoryTools\Rudy.cs" />
     <Compile Include="Modules\Mods\AutoPotionModule.cs" />
+    <Compile Include="Modules\Mods\AutoRepairModule.cs" />
     <Compile Include="Modules\Mods\BackToCenterModule.cs" />
     <Compile Include="Modules\Mods\FollowModule.cs" />
     <Compile Include="Modules\Mods\GoToFellowModule.cs" />

@@ -44,8 +44,6 @@ namespace Winebotv2
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tZHuntArea = new System.Windows.Forms.TextBox();
             this.bHuntToggle = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.bSetArea = new System.Windows.Forms.Button();
@@ -158,6 +156,23 @@ namespace Winebotv2
             this.button21 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.AutoRepairGroupBox = new System.Windows.Forms.GroupBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.tRepairProcentage = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.item2RepairList = new System.Windows.Forms.ListBox();
+            this.button31 = new System.Windows.Forms.Button();
+            this.button30 = new System.Windows.Forms.Button();
+            this.listBox6 = new System.Windows.Forms.ListBox();
+            this.button28 = new System.Windows.Forms.Button();
+            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.cAutoRepair = new System.Windows.Forms.CheckBox();
+            this.button29 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tZHuntArea = new System.Windows.Forms.TextBox();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.timer3 = new System.Windows.Forms.Timer(this.components);
@@ -165,14 +180,7 @@ namespace Winebotv2
             this.Statustext = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.button28 = new System.Windows.Forms.Button();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
-            this.listBox6 = new System.Windows.Forms.ListBox();
-            this.button29 = new System.Windows.Forms.Button();
-            this.button30 = new System.Windows.Forms.Button();
-            this.button31 = new System.Windows.Forms.Button();
-            this.item2RepairList = new System.Windows.Forms.ListBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -191,8 +199,9 @@ namespace Winebotv2
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tabPage8.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.tabPage9.SuspendLayout();
+            this.AutoRepairGroupBox.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -206,10 +215,11 @@ namespace Winebotv2
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage9);
-            this.tabControl1.Location = new System.Drawing.Point(2, 2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(549, 521);
+            this.tabControl1.Size = new System.Drawing.Size(560, 542);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -223,8 +233,6 @@ namespace Winebotv2
             this.tabPage1.Controls.Add(this.comboBox3);
             this.tabPage1.Controls.Add(this.groupBox5);
             this.tabPage1.Controls.Add(this.button2);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.tZHuntArea);
             this.tabPage1.Controls.Add(this.bHuntToggle);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.label2);
@@ -334,25 +342,6 @@ namespace Winebotv2
             this.button2.Text = "Add All";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(477, 386);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(17, 13);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Z:";
-            this.label7.Visible = false;
-            // 
-            // tZHuntArea
-            // 
-            this.tZHuntArea.Location = new System.Drawing.Point(500, 383);
-            this.tZHuntArea.Name = "tZHuntArea";
-            this.tZHuntArea.Size = new System.Drawing.Size(100, 20);
-            this.tZHuntArea.TabIndex = 8;
-            this.tZHuntArea.Text = "1";
-            this.tZHuntArea.Visible = false;
             // 
             // bHuntToggle
             // 
@@ -1441,6 +1430,7 @@ namespace Winebotv2
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.textBox1);
             this.tabPage8.Controls.Add(this.button22);
             this.tabPage8.Controls.Add(this.listBox5);
             this.tabPage8.Controls.Add(this.comboBox4);
@@ -1449,7 +1439,7 @@ namespace Winebotv2
             this.tabPage8.Controls.Add(this.listBox1);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(541, 495);
+            this.tabPage8.Size = new System.Drawing.Size(552, 516);
             this.tabPage8.TabIndex = 8;
             this.tabPage8.Text = "Debug";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1475,7 +1465,7 @@ namespace Winebotv2
             // comboBox4
             // 
             this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(237, 35);
+            this.comboBox4.Location = new System.Drawing.Point(406, 135);
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(121, 21);
             this.comboBox4.TabIndex = 9;
@@ -1483,13 +1473,13 @@ namespace Winebotv2
             // 
             // button21
             // 
-            this.button21.Location = new System.Drawing.Point(237, 62);
+            this.button21.Location = new System.Drawing.Point(237, 49);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(121, 23);
             this.button21.TabIndex = 8;
             this.button21.Text = "button21";
             this.button21.UseVisualStyleBackColor = true;
-            this.button21.Visible = false;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
             // 
             // button12
             // 
@@ -1507,6 +1497,177 @@ namespace Winebotv2
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(216, 420);
             this.listBox1.TabIndex = 6;
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Controls.Add(this.AutoRepairGroupBox);
+            this.tabPage9.Controls.Add(this.cAutoRepair);
+            this.tabPage9.Controls.Add(this.button29);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Size = new System.Drawing.Size(541, 495);
+            this.tabPage9.TabIndex = 9;
+            this.tabPage9.Text = "Auto repair";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // AutoRepairGroupBox
+            // 
+            this.AutoRepairGroupBox.Controls.Add(this.label23);
+            this.AutoRepairGroupBox.Controls.Add(this.label22);
+            this.AutoRepairGroupBox.Controls.Add(this.label21);
+            this.AutoRepairGroupBox.Controls.Add(this.tRepairProcentage);
+            this.AutoRepairGroupBox.Controls.Add(this.label15);
+            this.AutoRepairGroupBox.Controls.Add(this.item2RepairList);
+            this.AutoRepairGroupBox.Controls.Add(this.button31);
+            this.AutoRepairGroupBox.Controls.Add(this.button30);
+            this.AutoRepairGroupBox.Controls.Add(this.listBox6);
+            this.AutoRepairGroupBox.Controls.Add(this.button28);
+            this.AutoRepairGroupBox.Controls.Add(this.comboBox7);
+            this.AutoRepairGroupBox.Location = new System.Drawing.Point(13, 36);
+            this.AutoRepairGroupBox.Name = "AutoRepairGroupBox";
+            this.AutoRepairGroupBox.Size = new System.Drawing.Size(520, 445);
+            this.AutoRepairGroupBox.TabIndex = 35;
+            this.AutoRepairGroupBox.TabStop = false;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(310, 19);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(91, 13);
+            this.label23.TabIndex = 44;
+            this.label23.Text = "Items to repair list:";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(16, 16);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(45, 13);
+            this.label22.TabIndex = 43;
+            this.label22.Text = "Item list:";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(16, 401);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(77, 13);
+            this.label21.TabIndex = 42;
+            this.label21.Text = "Repairing item:";
+            // 
+            // tRepairProcentage
+            // 
+            this.tRepairProcentage.Location = new System.Drawing.Point(313, 419);
+            this.tRepairProcentage.Name = "tRepairProcentage";
+            this.tRepairProcentage.Size = new System.Drawing.Size(170, 20);
+            this.tRepairProcentage.TabIndex = 41;
+            this.tRepairProcentage.Text = "30";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(310, 401);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(176, 13);
+            this.label15.TabIndex = 40;
+            this.label15.Text = "Repair when procentage are below:";
+            // 
+            // item2RepairList
+            // 
+            this.item2RepairList.FormattingEnabled = true;
+            this.item2RepairList.Location = new System.Drawing.Point(307, 35);
+            this.item2RepairList.Name = "item2RepairList";
+            this.item2RepairList.Size = new System.Drawing.Size(176, 303);
+            this.item2RepairList.TabIndex = 39;
+            // 
+            // button31
+            // 
+            this.button31.Location = new System.Drawing.Point(198, 175);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(103, 23);
+            this.button31.TabIndex = 38;
+            this.button31.Text = "<<";
+            this.button31.UseVisualStyleBackColor = true;
+            this.button31.Click += new System.EventHandler(this.button31_Click_1);
+            // 
+            // button30
+            // 
+            this.button30.Location = new System.Drawing.Point(198, 146);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(103, 23);
+            this.button30.TabIndex = 37;
+            this.button30.Text = ">>";
+            this.button30.UseVisualStyleBackColor = true;
+            this.button30.Click += new System.EventHandler(this.button30_Click_1);
+            // 
+            // listBox6
+            // 
+            this.listBox6.FormattingEnabled = true;
+            this.listBox6.Location = new System.Drawing.Point(16, 32);
+            this.listBox6.Name = "listBox6";
+            this.listBox6.Size = new System.Drawing.Size(176, 316);
+            this.listBox6.TabIndex = 36;
+            // 
+            // button28
+            // 
+            this.button28.Location = new System.Drawing.Point(19, 354);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(173, 21);
+            this.button28.TabIndex = 35;
+            this.button28.Text = "Refresh";
+            this.button28.UseVisualStyleBackColor = true;
+            this.button28.Click += new System.EventHandler(this.button28_Click);
+            // 
+            // comboBox7
+            // 
+            this.comboBox7.FormattingEnabled = true;
+            this.comboBox7.Location = new System.Drawing.Point(16, 418);
+            this.comboBox7.Name = "comboBox7";
+            this.comboBox7.Size = new System.Drawing.Size(285, 21);
+            this.comboBox7.TabIndex = 34;
+            this.comboBox7.DropDown += new System.EventHandler(this.comboBox7_DropDown);
+            // 
+            // cAutoRepair
+            // 
+            this.cAutoRepair.AutoSize = true;
+            this.cAutoRepair.Location = new System.Drawing.Point(13, 13);
+            this.cAutoRepair.Name = "cAutoRepair";
+            this.cAutoRepair.Size = new System.Drawing.Size(114, 17);
+            this.cAutoRepair.TabIndex = 34;
+            this.cAutoRepair.Text = "Auto repair module";
+            this.cAutoRepair.UseVisualStyleBackColor = true;
+            this.cAutoRepair.CheckedChanged += new System.EventHandler(this.cAutoRepair_CheckedChanged);
+            // 
+            // button29
+            // 
+            this.button29.Location = new System.Drawing.Point(13, 36);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(120, 23);
+            this.button29.TabIndex = 30;
+            this.button29.Text = "Refresh Item list";
+            this.button29.UseVisualStyleBackColor = true;
+            this.button29.Click += new System.EventHandler(this.button29_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(553, 416);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(17, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Z:";
+            this.label7.Visible = false;
+            // 
+            // tZHuntArea
+            // 
+            this.tZHuntArea.Location = new System.Drawing.Point(312, 521);
+            this.tZHuntArea.Name = "tZHuntArea";
+            this.tZHuntArea.Size = new System.Drawing.Size(179, 20);
+            this.tZHuntArea.TabIndex = 8;
+            this.tZHuntArea.Text = "1";
+            this.tZHuntArea.Visible = false;
+            this.tZHuntArea.TextChanged += new System.EventHandler(this.tZHuntArea_TextChanged);
             // 
             // timer2
             // 
@@ -1526,7 +1687,7 @@ namespace Winebotv2
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 520);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(556, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(560, 22);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
@@ -1547,92 +1708,21 @@ namespace Winebotv2
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // tabPage9
+            // textBox1
             // 
-            this.tabPage9.Controls.Add(this.item2RepairList);
-            this.tabPage9.Controls.Add(this.button31);
-            this.tabPage9.Controls.Add(this.button30);
-            this.tabPage9.Controls.Add(this.button29);
-            this.tabPage9.Controls.Add(this.listBox6);
-            this.tabPage9.Controls.Add(this.button28);
-            this.tabPage9.Controls.Add(this.comboBox7);
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(541, 495);
-            this.tabPage9.TabIndex = 9;
-            this.tabPage9.Text = "AutoRepair";
-            this.tabPage9.UseVisualStyleBackColor = true;
-            // 
-            // button28
-            // 
-            this.button28.Location = new System.Drawing.Point(58, 408);
-            this.button28.Name = "button28";
-            this.button28.Size = new System.Drawing.Size(75, 23);
-            this.button28.TabIndex = 28;
-            this.button28.Text = "button28";
-            this.button28.UseVisualStyleBackColor = true;
-            // 
-            // comboBox7
-            // 
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(53, 369);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(417, 21);
-            this.comboBox7.TabIndex = 27;
-            this.comboBox7.DropDown += new System.EventHandler(this.comboBox7_DropDown_1);
-            // 
-            // listBox6
-            // 
-            this.listBox6.FormattingEnabled = true;
-            this.listBox6.Location = new System.Drawing.Point(3, 60);
-            this.listBox6.Name = "listBox6";
-            this.listBox6.Size = new System.Drawing.Size(238, 303);
-            this.listBox6.TabIndex = 29;
-            // 
-            // button29
-            // 
-            this.button29.Location = new System.Drawing.Point(53, 31);
-            this.button29.Name = "button29";
-            this.button29.Size = new System.Drawing.Size(120, 23);
-            this.button29.TabIndex = 30;
-            this.button29.Text = "Refresh Item list";
-            this.button29.UseVisualStyleBackColor = true;
-            this.button29.Click += new System.EventHandler(this.button29_Click);
-            // 
-            // button30
-            // 
-            this.button30.Location = new System.Drawing.Point(247, 146);
-            this.button30.Name = "button30";
-            this.button30.Size = new System.Drawing.Size(75, 23);
-            this.button30.TabIndex = 31;
-            this.button30.Text = ">>";
-            this.button30.UseVisualStyleBackColor = true;
-            this.button30.Click += new System.EventHandler(this.button30_Click);
-            // 
-            // button31
-            // 
-            this.button31.Location = new System.Drawing.Point(247, 175);
-            this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(75, 23);
-            this.button31.TabIndex = 32;
-            this.button31.Text = "<<";
-            this.button31.UseVisualStyleBackColor = true;
-            this.button31.Click += new System.EventHandler(this.button31_Click);
-            // 
-            // item2RepairList
-            // 
-            this.item2RepairList.FormattingEnabled = true;
-            this.item2RepairList.Location = new System.Drawing.Point(328, 60);
-            this.item2RepairList.Name = "item2RepairList";
-            this.item2RepairList.Size = new System.Drawing.Size(166, 303);
-            this.item2RepairList.TabIndex = 33;
+            this.textBox1.Location = new System.Drawing.Point(237, 23);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 12;
             // 
             // cBot
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(556, 542);
+            this.ClientSize = new System.Drawing.Size(560, 542);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.tZHuntArea);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "cBot";
@@ -1667,9 +1757,13 @@ namespace Winebotv2
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
+            this.tabPage9.ResumeLayout(false);
+            this.tabPage9.PerformLayout();
+            this.AutoRepairGroupBox.ResumeLayout(false);
+            this.AutoRepairGroupBox.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.tabPage9.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1811,12 +1905,20 @@ namespace Winebotv2
         private Timer timer1;
         private ToolStripStatusLabel toolStripStatusLabel1;
         private TabPage tabPage9;
+        private Button button29;
+        private GroupBox AutoRepairGroupBox;
+        private ListBox item2RepairList;
         private Button button31;
         private Button button30;
-        private Button button29;
         private ListBox listBox6;
         private Button button28;
         private ComboBox comboBox7;
-        private ListBox item2RepairList;
+        private CheckBox cAutoRepair;
+        private TextBox tRepairProcentage;
+        private Label label15;
+        private Label label23;
+        private Label label22;
+        private Label label21;
+        private TextBox textBox1;
     }
 }
