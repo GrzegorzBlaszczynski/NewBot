@@ -24,7 +24,7 @@ namespace SharpNativeDLL
             {
                 case DLL_PROCESS_ATTACH:
 
-                    //AllocConsole();
+                    AllocConsole();
                     Console.WriteLine("RUN");
                     while (true)
                     {
@@ -91,10 +91,20 @@ namespace SharpNativeDLL
                                         string[] commandData = receivedData.Split(';');
                                         GameHackFunc.Game.Actions.RepairItem(int.Parse(commandData[1]), int.Parse(commandData[2]));
                                     }
-                                    else if (receivedData.Contains("BUY"))
+                                    else if (receivedData.Contains("ADDTOSTACK"))
                                     {
                                         string[] commandData = receivedData.Split(';');
                                         GameHackFunc.Game.Actions.PutItemToBuy(int.Parse(commandData[1]), int.Parse(commandData[2]));
+                                    }
+                                    else if (receivedData.Contains("CONFIRMBUY"))
+                                    {
+                                        GameHackFunc.Game.Actions.ConfirmBuingStack();
+                                    }
+                                    else if (receivedData.Contains("OPENSHOP"))
+                                    {
+                                        Console.WriteLine("Shop opening");
+                                        string[] commandData = receivedData.Split(';');
+                                        GameHackFunc.Game.Actions.OpenShopDialog(ushort.Parse(commandData[1]));
                                     }
                                 }
                             }

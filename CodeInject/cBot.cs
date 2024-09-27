@@ -929,7 +929,17 @@ namespace Winebotv2
 
         private void button21_Click(object sender, EventArgs e)
         {
-            GameHackFunc.Game.Actions.PutItemToBuy(int.Parse(textBox1.Text), 10);
+            GameHackFunc.Game.Actions.PutItemToBuy(int.Parse(textBox1.Text), 1);
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            GameHackFunc.Game.Actions.ConfirmBuingStack();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GameHackFunc.Game.Actions.OpenShop((listBox1.SelectedItem as IObject).ID);
         }
     }
 }

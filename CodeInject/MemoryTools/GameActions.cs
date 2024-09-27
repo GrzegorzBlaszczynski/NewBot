@@ -91,10 +91,19 @@ namespace Winebotv2.MemoryTools
             LuigiPipe.Instance.SendProcedure($"REPAIR;{RepairingItem.NetworkID};{Item2Repair.NetworkID}");
         }
 
+        public void ConfirmBuingStack(uint unknowArg = 0xFFFFFFFF)
+        {
+            LuigiPipe.Instance.SendProcedure($"CONFIRMBUY");
+        }
 
         public void PutItemToBuy(int slot, int count)
         {
-            LuigiPipe.Instance.SendProcedure($"BUY;{slot};{count}");
+            LuigiPipe.Instance.SendProcedure($"ADDTOSTACK;{slot};{count}");
+        }
+
+        public void OpenShop(ushort npcId)
+        {
+            LuigiPipe.Instance.SendProcedure($"OPENSHOP;{npcId}");
         }
 
 

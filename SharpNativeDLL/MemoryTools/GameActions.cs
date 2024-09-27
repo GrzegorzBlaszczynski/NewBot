@@ -19,7 +19,11 @@ namespace CodeInject.MemoryTools
         private delegate void TalkWithNPC(long arg0, ushort npcIndex);
         private delegate void RepairItemAction(long networkClass, int itemNetID, int itemNetID2);
         private delegate long CreateBuyContext();
+        private delegate long UnknowFunctionForShopOpen();
+        private delegate void OpenShopWindow(ushort npcId, int unknowArg);
         private delegate void SetItemToBuy(long context, int slotNumber, int count);
+        [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
+        private delegate void BuyStack(long context,int unknow1);
 
         private delegate void PacketSendDelegate(long arg0, byte* packet);
 
@@ -38,6 +42,9 @@ namespace CodeInject.MemoryTools
         private RepairItemAction RepairItemFunc;
         private CreateBuyContext CreateContextFunc;
         private SetItemToBuy SetItemToBuyFunc;
+        private BuyStack BuyStackFunction;
+        private UnknowFunctionForShopOpen UnknowForShopOpenFunc;
+        private OpenShopWindow OpenShopFunc;
 
         public Log LoggerFunc;
         private long BaseAddres;
@@ -65,6 +72,10 @@ namespace CodeInject.MemoryTools
             RepairItemFunc = (RepairItemAction)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x5d52a0), typeof(RepairItemAction));
             CreateContextFunc = (CreateBuyContext)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x41d130), typeof(CreateBuyContext));
             SetItemToBuyFunc = (SetItemToBuy)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x41ce60), typeof(SetItemToBuy));
+            BuyStackFunction = (BuyStack)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x41d5e0), typeof(BuyStack));
+            UnknowForShopOpenFunc = (UnknowFunctionForShopOpen)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x42f140), typeof(UnknowFunctionForShopOpen));
+            OpenShopFunc = (OpenShopWindow)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x56C7C0), typeof(OpenShopWindow));
+
 
             PickUpFunc = (PickUpAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("48 85 f6 74 ?? 48 8b 06 48 8b ce 48 8b 1d ?? ?? ?? ?? ff 50 ?? 0f bf 56 ?? 48 8d 8b ?? ?? ?? ?? 4c 8b c0 e8 ?? ?? ?? ??"), typeof(PickUpAction)); //MSG#INV4*/
         }
@@ -75,6 +86,20 @@ namespace CodeInject.MemoryTools
            
         }
 
+        public void OpenShopDialog(ushort npcId)
+        {
+           // long arg0 = UnknowForShopOpenFunc();
+
+            OpenShopFunc(npcId, 1);
+        }
+
+
+        public void ConfirmBuingStack(int unknowArg = 0)
+        {
+            long cotext = CreateContextFunc();
+
+            BuyStackFunction(cotext, unknowArg);
+        }
 
 
         public void PickUp(long itemPointer,int itemID)
