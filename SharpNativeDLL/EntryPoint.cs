@@ -91,6 +91,11 @@ namespace SharpNativeDLL
                                         string[] commandData = receivedData.Split(';');
                                         GameHackFunc.Game.Actions.RepairItem(int.Parse(commandData[1]), int.Parse(commandData[2]));
                                     }
+                                    else if (receivedData.Contains("BUY"))
+                                    {
+                                        string[] commandData = receivedData.Split(';');
+                                        GameHackFunc.Game.Actions.PutItemToBuy(int.Parse(commandData[1]), int.Parse(commandData[2]));
+                                    }
                                 }
                             }
                         }

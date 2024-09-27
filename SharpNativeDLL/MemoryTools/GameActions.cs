@@ -18,6 +18,8 @@ namespace CodeInject.MemoryTools
         private delegate void MoveToAction(long thisArg, int unknow0, float* destinationPoint);
         private delegate void TalkWithNPC(long arg0, ushort npcIndex);
         private delegate void RepairItemAction(long networkClass, int itemNetID, int itemNetID2);
+        private delegate long CreateBuyContext();
+        private delegate void SetItemToBuy(long context, int slotNumber, int count);
 
         private delegate void PacketSendDelegate(long arg0, byte* packet);
 
@@ -34,6 +36,8 @@ namespace CodeInject.MemoryTools
         private TalkWithNPC TalkToNPCFunc;
         private PacketSendDelegate SendPacketFunc;
         private RepairItemAction RepairItemFunc;
+        private CreateBuyContext CreateContextFunc;
+        private SetItemToBuy SetItemToBuyFunc;
 
         public Log LoggerFunc;
         private long BaseAddres;
@@ -59,9 +63,10 @@ namespace CodeInject.MemoryTools
 
             MoveToPointFunc = (MoveToAction)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres+0x5d3970), typeof(MoveToAction));
             RepairItemFunc = (RepairItemAction)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x5d52a0), typeof(RepairItemAction));
+            CreateContextFunc = (CreateBuyContext)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x41d130), typeof(CreateBuyContext));
+            SetItemToBuyFunc = (SetItemToBuy)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x41ce60), typeof(SetItemToBuy));
 
             PickUpFunc = (PickUpAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("48 85 f6 74 ?? 48 8b 06 48 8b ce 48 8b 1d ?? ?? ?? ?? ff 50 ?? 0f bf 56 ?? 48 8d 8b ?? ?? ?? ?? 4c 8b c0 e8 ?? ?? ?? ??"), typeof(PickUpAction)); //MSG#INV4*/
-
         }
 
 
@@ -98,6 +103,14 @@ namespace CodeInject.MemoryTools
             }
         }
 
+        public void PutItemToBuy(int slot,int count)
+        {
+            long cotext = CreateContextFunc();
+
+            SetItemToBuyFunc(cotext, slot, count);
+        }
+
+
         //RCX trose.exe+17C04B8
         //RDX 0x4
         //r8 0
@@ -113,6 +126,12 @@ namespace CodeInject.MemoryTools
             {
                 MoveToPointFunc((*(long*)BaseNetworkClass) + 0x16b8, 0, p);
             }
+        }
+
+
+        private long CreateBuyingContext()
+        {
+            return CreateContextFunc();
         }
 
         public void CastSpell(int skillIndex)
