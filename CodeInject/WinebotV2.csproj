@@ -128,6 +128,22 @@
     <Compile Include="BotStates\PickUpState.cs" />
     <Compile Include="BotStates\StandbyState.cs" />
     <Compile Include="BotStates\WalkState.cs" />
+    <Compile Include="BrainlessScript\Commands\BuyCommand.cs" />
+    <Compile Include="BrainlessScript\Commands\Command.cs" />
+    <Compile Include="BrainlessScript\Commands\CommandList.cs" />
+    <Compile Include="BrainlessScript\Commands\ConfirmshopingCommand.cs" />
+    <Compile Include="BrainlessScript\Commands\GoCommand.cs" />
+    <Compile Include="BrainlessScript\Commands\ICommand.cs" />
+    <Compile Include="BrainlessScript\Commands\ICommandUpdater.cs" />
+    <Compile Include="BrainlessScript\Commands\OpenNpcCommand.cs" />
+    <Compile Include="BrainlessScript\BrainlessEngine.cs" />
+    <Compile Include="BrainlessScript\Commands\RepairCommand.cs" />
+    <Compile Include="BuyItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuyItem.Designer.cs">
+      <DependentUpon>BuyItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="cBot.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,8 +178,10 @@
     <Compile Include="MemoryTools\DataFetcher.cs" />
     <Compile Include="MemoryTools\GameHackFunc.cs" />
     <Compile Include="MemoryTools\MemoryTools.cs" />
+    <Compile Include="Modules\Mods\ReturningConditions\CharacterIsDeadCondition.cs" />
+    <Compile Include="Modules\Mods\ReturningConditions\ICondition.cs" />
     <Compile Include="Modules\ModuleConteiner.cs" />
-    <Compile Include="Modules\Mods\WalkModule.cs" />
+    <Compile Include="Modules\Mods\ReturnToCityModule.cs" />
     <Compile Include="Party\Party.cs" />
     <Compile Include="Party\PartyMember.cs" />
     <Compile Include="PickupFilters\AdvancedFilter.cs" />
@@ -183,6 +201,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Save.cs" />
+    <Compile Include="ScriptRecorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScriptRecorder.Designer.cs">
+      <DependentUpon>ScriptRecorder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Skill\Skills.cs" />
     <Compile Include="Start.cs">
       <SubType>Form</SubType>
@@ -217,12 +241,18 @@
     <EmbeddedResource Include="AdvancedFilterForm.resx">
       <DependentUpon>AdvancedFilterForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BuyItem.resx">
+      <DependentUpon>BuyItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="cBot.resx">
       <DependentUpon>cBot.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScriptRecorder.resx">
+      <DependentUpon>ScriptRecorder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Start.resx">
       <DependentUpon>Start.cs</DependentUpon>
@@ -350,6 +380,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Reloaded.Assembler.1.0.14\build\Reloaded.Assembler.targets" Condition="Exists('..\packages\Reloaded.Assembler.1.0.14\build\Reloaded.Assembler.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

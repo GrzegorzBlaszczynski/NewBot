@@ -150,6 +150,8 @@ namespace Winebotv2
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.button34 = new System.Windows.Forms.Button();
+            this.button33 = new System.Windows.Forms.Button();
             this.button32 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button22 = new System.Windows.Forms.Button();
@@ -173,6 +175,13 @@ namespace Winebotv2
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.cAutoRepair = new System.Windows.Forms.CheckBox();
             this.button29 = new System.Windows.Forms.Button();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.button36 = new System.Windows.Forms.Button();
+            this.button35 = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
+            this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tZHuntArea = new System.Windows.Forms.TextBox();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
@@ -182,6 +191,14 @@ namespace Winebotv2
             this.Statustext = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.comboBox8 = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -202,7 +219,11 @@ namespace Winebotv2
             this.tabPage8.SuspendLayout();
             this.tabPage9.SuspendLayout();
             this.AutoRepairGroupBox.SuspendLayout();
+            this.tabPage10.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -216,11 +237,12 @@ namespace Winebotv2
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage9);
+            this.tabControl1.Controls.Add(this.tabPage10);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(560, 542);
+            this.tabControl1.Size = new System.Drawing.Size(631, 542);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -246,7 +268,7 @@ namespace Winebotv2
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(552, 516);
+            this.tabPage1.Size = new System.Drawing.Size(623, 516);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Hunt";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -513,7 +535,7 @@ namespace Winebotv2
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(552, 516);
+            this.tabPage2.Size = new System.Drawing.Size(623, 516);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Attack Skills";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -716,7 +738,7 @@ namespace Winebotv2
             this.tabPage3.Controls.Add(this.healskills);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(552, 516);
+            this.tabPage3.Size = new System.Drawing.Size(623, 516);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Healing";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -934,7 +956,7 @@ namespace Winebotv2
             this.tabPage4.Controls.Add(this.labCharName);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(552, 516);
+            this.tabPage4.Size = new System.Drawing.Size(623, 516);
             this.tabPage4.TabIndex = 5;
             this.tabPage4.Text = "Pick UP";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1102,7 +1124,7 @@ namespace Winebotv2
             this.tabPage5.Controls.Add(this.button4);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(552, 516);
+            this.tabPage5.Size = new System.Drawing.Size(623, 516);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Character";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1173,7 +1195,7 @@ namespace Winebotv2
             this.tabPage6.Controls.Add(this.label8);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(552, 516);
+            this.tabPage6.Size = new System.Drawing.Size(623, 516);
             this.tabPage6.TabIndex = 6;
             this.tabPage6.Text = "Auto-Potion";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1291,7 +1313,7 @@ namespace Winebotv2
             this.tabPage7.Controls.Add(this.listBox3);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(552, 516);
+            this.tabPage7.Size = new System.Drawing.Size(623, 516);
             this.tabPage7.TabIndex = 7;
             this.tabPage7.Text = "Others";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1431,6 +1453,8 @@ namespace Winebotv2
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.button34);
+            this.tabPage8.Controls.Add(this.button33);
             this.tabPage8.Controls.Add(this.button32);
             this.tabPage8.Controls.Add(this.textBox1);
             this.tabPage8.Controls.Add(this.button22);
@@ -1441,10 +1465,31 @@ namespace Winebotv2
             this.tabPage8.Controls.Add(this.listBox1);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(552, 516);
+            this.tabPage8.Size = new System.Drawing.Size(623, 516);
             this.tabPage8.TabIndex = 8;
             this.tabPage8.Text = "Debug";
             this.tabPage8.UseVisualStyleBackColor = true;
+            this.tabPage8.Click += new System.EventHandler(this.tabPage8_Click);
+            // 
+            // button34
+            // 
+            this.button34.Location = new System.Drawing.Point(455, 460);
+            this.button34.Name = "button34";
+            this.button34.Size = new System.Drawing.Size(80, 23);
+            this.button34.TabIndex = 15;
+            this.button34.Text = "buy";
+            this.button34.UseVisualStyleBackColor = true;
+            this.button34.Click += new System.EventHandler(this.button34_Click);
+            // 
+            // button33
+            // 
+            this.button33.Location = new System.Drawing.Point(455, 20);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(89, 23);
+            this.button33.TabIndex = 14;
+            this.button33.Text = "WalkTEST";
+            this.button33.UseVisualStyleBackColor = true;
+            this.button33.Click += new System.EventHandler(this.button33_Click);
             // 
             // button32
             // 
@@ -1476,19 +1521,18 @@ namespace Winebotv2
             // listBox5
             // 
             this.listBox5.FormattingEnabled = true;
-            this.listBox5.Location = new System.Drawing.Point(233, 91);
+            this.listBox5.Location = new System.Drawing.Point(233, 117);
             this.listBox5.Name = "listBox5";
-            this.listBox5.Size = new System.Drawing.Size(216, 355);
+            this.listBox5.Size = new System.Drawing.Size(216, 329);
             this.listBox5.TabIndex = 10;
             // 
             // comboBox4
             // 
             this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(406, 135);
+            this.comboBox4.Location = new System.Drawing.Point(228, 90);
             this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 21);
+            this.comboBox4.Size = new System.Drawing.Size(276, 21);
             this.comboBox4.TabIndex = 9;
-            this.comboBox4.Visible = false;
             // 
             // button21
             // 
@@ -1525,7 +1569,7 @@ namespace Winebotv2
             this.tabPage9.Controls.Add(this.button29);
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(552, 516);
+            this.tabPage9.Size = new System.Drawing.Size(623, 516);
             this.tabPage9.TabIndex = 9;
             this.tabPage9.Text = "Auto repair";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -1669,6 +1713,81 @@ namespace Winebotv2
             this.button29.UseVisualStyleBackColor = true;
             this.button29.Click += new System.EventHandler(this.button29_Click);
             // 
+            // tabPage10
+            // 
+            this.tabPage10.Controls.Add(this.checkBox2);
+            this.tabPage10.Controls.Add(this.groupBox7);
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Size = new System.Drawing.Size(623, 516);
+            this.tabPage10.TabIndex = 10;
+            this.tabPage10.Text = "Return to town";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(8, 3);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(59, 17);
+            this.checkBox2.TabIndex = 0;
+            this.checkBox2.Text = "Enable";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.groupBox8);
+            this.groupBox7.Controls.Add(this.button36);
+            this.groupBox7.Controls.Add(this.button35);
+            this.groupBox7.Controls.Add(this.label24);
+            this.groupBox7.Controls.Add(this.comboBox6);
+            this.groupBox7.Enabled = false;
+            this.groupBox7.Location = new System.Drawing.Point(3, 26);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(612, 467);
+            this.groupBox7.TabIndex = 0;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Script config";
+            // 
+            // button36
+            // 
+            this.button36.Location = new System.Drawing.Point(399, 19);
+            this.button36.Name = "button36";
+            this.button36.Size = new System.Drawing.Size(75, 23);
+            this.button36.TabIndex = 3;
+            this.button36.Text = "Load";
+            this.button36.UseVisualStyleBackColor = true;
+            this.button36.Click += new System.EventHandler(this.button36_Click);
+            // 
+            // button35
+            // 
+            this.button35.Location = new System.Drawing.Point(318, 17);
+            this.button35.Name = "button35";
+            this.button35.Size = new System.Drawing.Size(75, 23);
+            this.button35.TabIndex = 2;
+            this.button35.Text = "Load";
+            this.button35.UseVisualStyleBackColor = true;
+            this.button35.Click += new System.EventHandler(this.button35_Click);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(6, 22);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(54, 13);
+            this.label24.TabIndex = 1;
+            this.label24.Text = "Scripts list";
+            // 
+            // comboBox6
+            // 
+            this.comboBox6.FormattingEnabled = true;
+            this.comboBox6.Location = new System.Drawing.Point(66, 19);
+            this.comboBox6.Name = "comboBox6";
+            this.comboBox6.Size = new System.Drawing.Size(237, 21);
+            this.comboBox6.TabIndex = 0;
+            this.comboBox6.DropDown += new System.EventHandler(this.comboBox6_DropDown);
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -1707,7 +1826,7 @@ namespace Winebotv2
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 520);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(560, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(631, 22);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
@@ -1728,10 +1847,81 @@ namespace Winebotv2
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.groupBox9);
+            this.groupBox8.Controls.Add(this.textBox2);
+            this.groupBox8.Controls.Add(this.checkBox5);
+            this.groupBox8.Controls.Add(this.checkBox4);
+            this.groupBox8.Controls.Add(this.checkBox3);
+            this.groupBox8.Location = new System.Drawing.Point(6, 46);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(600, 111);
+            this.groupBox8.TabIndex = 4;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Return options";
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(6, 19);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(109, 17);
+            this.checkBox3.TabIndex = 0;
+            this.checkBox3.Text = "Character is dead";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(121, 19);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(141, 17);
+            this.checkBox4.TabIndex = 1;
+            this.checkBox4.Text = "Durability of weapon is 0";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(6, 88);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(152, 17);
+            this.checkBox5.TabIndex = 2;
+            this.checkBox5.Text = "Potion amount is less than:";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(156, 85);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(106, 20);
+            this.textBox2.TabIndex = 3;
+            this.textBox2.Text = "0";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.comboBox8);
+            this.groupBox9.Location = new System.Drawing.Point(393, 60);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(200, 45);
+            this.groupBox9.TabIndex = 4;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Teleport scroll item";
+            // 
+            // comboBox8
+            // 
+            this.comboBox8.FormattingEnabled = true;
+            this.comboBox8.Location = new System.Drawing.Point(6, 18);
+            this.comboBox8.Name = "comboBox8";
+            this.comboBox8.Size = new System.Drawing.Size(188, 21);
+            this.comboBox8.TabIndex = 0;
+            this.comboBox8.DropDown += new System.EventHandler(this.comboBox8_DropDown);
+            // 
             // cBot
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(560, 542);
+            this.ClientSize = new System.Drawing.Size(631, 542);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label7);
@@ -1775,8 +1965,15 @@ namespace Winebotv2
             this.tabPage9.PerformLayout();
             this.AutoRepairGroupBox.ResumeLayout(false);
             this.AutoRepairGroupBox.PerformLayout();
+            this.tabPage10.ResumeLayout(false);
+            this.tabPage10.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1934,5 +2131,22 @@ namespace Winebotv2
         private Label label21;
         private TextBox textBox1;
         private Button button32;
+        private Button button33;
+        private Button button34;
+        private TabPage tabPage10;
+        private CheckBox checkBox2;
+        private GroupBox groupBox7;
+        private Label label24;
+        private ComboBox comboBox6;
+        private ColorDialog colorDialog1;
+        private Button button35;
+        private Button button36;
+        private GroupBox groupBox8;
+        private TextBox textBox2;
+        private CheckBox checkBox5;
+        private CheckBox checkBox4;
+        private CheckBox checkBox3;
+        private GroupBox groupBox9;
+        private ComboBox comboBox8;
     }
 }

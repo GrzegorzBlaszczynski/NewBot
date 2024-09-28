@@ -16,6 +16,7 @@ namespace Winebotv2.Hunt
 
         void Update();
         int GetSkillIndex(int SkillID);
+        void ResetTarget();
         void AddSkill(Skills skill,SkillTypes type);
         void RemoveSkill(Skills skill);
         void AddBuffsSkill(Skills skill);

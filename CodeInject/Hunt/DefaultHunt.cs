@@ -35,6 +35,8 @@ namespace Winebotv2.Hunt
             Target = null;
         }
 
+
+
         public override void AddSkill(Skills skill, SkillTypes type)
         {
             base.AddSkill(skill, type);

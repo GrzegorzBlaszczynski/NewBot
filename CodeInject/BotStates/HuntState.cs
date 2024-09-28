@@ -20,11 +20,6 @@ namespace Winebotv2.BotStates
 
         public unsafe void Work(BotContext context)
         {
-            if(Player.GetPlayer.Hp <=0)
-            {
-                context.SetState("STANDBY");
-            }
-
 
             if(context.GetItemsNearby().Count > 0)
             {

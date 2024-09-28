@@ -24,7 +24,7 @@ namespace SharpNativeDLL
             {
                 case DLL_PROCESS_ATTACH:
 
-                    AllocConsole();
+                  //  AllocConsole();
                     Console.WriteLine("RUN");
                     while (true)
                     {
@@ -95,16 +95,29 @@ namespace SharpNativeDLL
                                     {
                                         string[] commandData = receivedData.Split(';');
                                         GameHackFunc.Game.Actions.PutItemToBuy(int.Parse(commandData[1]), int.Parse(commandData[2]));
+                                        writer.WriteLine($"OK");
+                                        writer.Flush();
                                     }
                                     else if (receivedData.Contains("CONFIRMBUY"))
                                     {
                                         GameHackFunc.Game.Actions.ConfirmBuingStack();
+                                        writer.WriteLine($"OK");
+                                        writer.Flush();
                                     }
                                     else if (receivedData.Contains("OPENSHOP"))
                                     {
                                         Console.WriteLine("Shop opening");
                                         string[] commandData = receivedData.Split(';');
                                         GameHackFunc.Game.Actions.OpenShopDialog(ushort.Parse(commandData[1]));
+                                        writer.WriteLine($"OK");
+                                        writer.Flush();
+                                    }
+                                    else if (receivedData.Contains("RAPAIRWITHNPC"))
+                                    {
+                                        string[] commandData = receivedData.Split(';');
+                                        GameHackFunc.Game.Actions.RepairItemWithNPC(int.Parse(commandData[1]), int.Parse(commandData[2]));
+                                        writer.WriteLine($"OK");
+                                        writer.Flush();
                                     }
                                 }
                             }

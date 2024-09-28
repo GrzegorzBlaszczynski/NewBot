@@ -14,6 +14,9 @@ using Winebotv2.UIPanels.Module_Panels;
 using System.IO;
 using Winebotv2.MemoryTools;
 using CodeInject.Modules.Mods;
+using CodeInject;
+using CodeInject.BrainlessScript.Commands;
+using Newtonsoft.Json;
 
 namespace Winebotv2
 {
@@ -873,9 +876,10 @@ namespace Winebotv2
 
         private void button22_Click(object sender, EventArgs e)
         {
-            cbHealHPItem.Items.Clear();
-            cbHealHPItem.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(cbHealHPItem.Items.OfType<InvItem>().ToList()).ToArray());
-
+            listBox5.Items.Clear();
+            listBox5.Items.AddRange(GameHackFunc.Game.ClientData.GetFullInventoryItemsWithSlots().ToArray());
+            comboBox4.Items.Clear();
+            comboBox4.Items.AddRange(GameHackFunc.Game.ClientData.GetNPCs().ToArray());
         }
 
 
@@ -934,12 +938,74 @@ namespace Winebotv2
 
         private void button32_Click(object sender, EventArgs e)
         {
-            GameHackFunc.Game.Actions.ConfirmBuingStack();
+            GameHackFunc.Game.Actions.ConfirmBuyingStack();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             GameHackFunc.Game.Actions.OpenShop((listBox1.SelectedItem as IObject).ID);
+        }
+
+        private void button33_Click(object sender, EventArgs e)
+        {
+            ScriptRecorder rc = new ScriptRecorder();
+            rc.ShowDialog();
+        }
+
+        private void button34_Click(object sender, EventArgs e)
+        {
+            LuigiPipe.Instance.SendFunction($"RAPAIRWITHNPC;{(comboBox4.SelectedItem as IObject).ID};{(listBox5.SelectedItem as InvItem).NetworkID}");
+        }
+
+        private void tabPage8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox6_DropDown(object sender, EventArgs e)
+        {
+            comboBox6.Items.Clear();
+            comboBox6.Items.AddRange(Directory.GetFiles("Scripts"));
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+            {
+                groupBox7.Enabled = true;
+                BotContext.AddModule(new ReturnToCityModule(BotContext));
+            }
+            else
+            {
+                groupBox7.Enabled = false;
+                BotContext.RemoveModule("WALKMODULE");
+            }
+        }
+
+        private void button35_Click(object sender, EventArgs e)
+        {
+            if (comboBox6.SelectedItem == null) return;
+
+            string jsonFromFile = File.ReadAllText(comboBox6.SelectedItem.ToString());
+
+            var deserializedCommands = JsonConvert.DeserializeObject<List<Command>>(jsonFromFile, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            });
+
+
+            BotContext.GetModule<ReturnToCityModule>("WALKMODULE").LoadScript(deserializedCommands.OfType<ICommand>().ToList());
+        }
+
+        private void button36_Click(object sender, EventArgs e)
+        {
+            BotContext.GetModule<ReturnToCityModule>("WALKMODULE").ForceRun();
+        }
+
+        private void comboBox8_DropDown(object sender, EventArgs e)
+        {
+            comboBox8.Items.Clear();
+            comboBox8.Items.AddRange(Player.GetPlayer.GetConsumableItemsFromInventory(cbHealHPItem.Items.OfType<InvItem>().ToList()).Where(x => x.ItemType == 0xA).ToArray());
         }
     }
 }

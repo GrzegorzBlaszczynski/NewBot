@@ -53,5 +53,10 @@ namespace Winebotv2.Hunt
                 BotBuffs.Remove(skillsToDelete);
             }
         }
+
+        public void ResetTarget()
+        {
+            Target = null;
+        }
     }
 }

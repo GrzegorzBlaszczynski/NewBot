@@ -106,6 +106,32 @@ namespace Winebotv2.MemoryTools
             currentList.RemoveAll(a => !invDescriptions.Any(b => (long)b.ObjectPointer == (long)a.ObjectPointer));
             return currentList;
         }
+
+        public List<InvItem> GetFullInventoryItemsWithSlots()
+        {
+
+            List<UIntPtr> itemsAddrs = GameHackFunc.Game.ClientData.getInventoryItems();
+            List<InvItem> invDescriptions = new List<InvItem>();
+
+            foreach (UIntPtr item in itemsAddrs)
+            {
+                if (item.ToUInt64() != 0x0)
+                {
+                    InvItem inv = new InvItem((long)GameHackFunc.Game.ClientData.GetInventoryItemDetails((item.ToUInt64())), (long)item.ToUInt64());
+                    invDescriptions.Add(inv);
+                }
+                else
+                {
+                    invDescriptions.Add(new InvItem());
+                }
+            }
+
+    
+            return invDescriptions;
+        }
+
+
+
         public IObject GetPartyMemberDetails(PartyMember member)
         {
             int partyMemberId = *(int*)(member.MemberAddres + 0x08);

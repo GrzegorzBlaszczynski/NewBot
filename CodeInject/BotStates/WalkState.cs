@@ -9,9 +9,7 @@ namespace Winebotv2.BotStates
 {
     internal class WalkState : IBotState
     {
-        int point = 0;
-        public List<Points> Path;
-        public WalkState(List<Points> path)
+        public WalkState()
         { 
 
         }
@@ -23,7 +21,7 @@ namespace Winebotv2.BotStates
 
         private void Finish()
         {
-            point = 0;
+
         }
     }
 }

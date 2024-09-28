@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 
 
@@ -49,17 +50,6 @@ namespace Winebotv2.MemoryTools
         public void Init()
         {
             BaseAddres = Process.GetCurrentProcess().MainModule.BaseAddress.ToInt64();
-            /*BaseNetworkClass = MemoryTools.GetVariableAddres("48 8B 47 28 48 8D 4F 28 FF 90 D8 01 00 00 48 8B 0D ?? ?? ?? ??").ToInt64();//2023.10.03
-
-            UseItemFunc = (UseItemAction)Marshal.GetDelegateForFunctionPointer((IntPtr)MemoryTools.GetFunctionAddress("40 53 48 83 ec 20 48 83 79 30 00 48 8b d9"), typeof(UseItemAction)); //MSG#INV5 
-
-            AttackWithSkillFunc = (AttackWithSkillAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("4c 8d 44 24 20 8b d0 e8 ?? ?? ?? ??"), typeof(AttackWithSkillAction));
-
-            NormalAttackFunc = (NormalAttackAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("48 8b cf e8 ?? ?? ?? ?? 84 c0 0f 84 ?? ?? ?? ?? 40 84 f6 0f 84 ?? ?? ?? ?? 48 8b 0d ?? ?? ?? ?? 8b d3 48 81 c1 ?? ?? ?? ?? e8 ?? ?? ?? ??"), typeof(NormalAttackAction));
-
-            MoveToPointFunc = (MoveToAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("48 8b cf e8 ?? ?? ?? ?? 84 c0 ?? ?? ?? ?? ?? ?? 48 8b 0d ?? ?? ?? ?? 4c 8b c6 48 81 c1 ?? ?? ?? ?? 33 d2 e8 ?? ?? ?? ??"), typeof(MoveToAction));
-
-            PickUpFunc = (PickUpAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("48 85 f6 74 ?? 48 8b 06 48 8b ce 48 8b 1d ?? ?? ?? ?? ff 50 ?? 0f bf 56 ?? 48 8d 8b ?? ?? ?? ?? 4c 8b c0 e8 ?? ?? ?? ??"), typeof(PickUpAction)); //MSG#INV4*/
         }
 
 
@@ -68,18 +58,10 @@ namespace Winebotv2.MemoryTools
            
         }
 
-        public void TalkToNPC(ushort ID)
+        public void RepairItemWithNPC(int npcGameId, int networkItemID)
         {
-            long* rcxAddr = (long*)BaseAddres + 0x16DAF00;
-            TalkToNPCFunc(*rcxAddr, ID);
+            LuigiPipe.Instance.SendFunction($"RAPAIRWITHNPC;{npcGameId};{networkItemID}");
         }
-
-        public void SendPacket(byte* packet)
-        {
-            long networkStructAddr = *((long*)(BaseAddres + 0x1526a00)) + 0x16b8 + 0x1e0;
-            SendPacketFunc(networkStructAddr, packet);
-        }
-
 
         public void PickUp(Item item)
         {
@@ -91,19 +73,19 @@ namespace Winebotv2.MemoryTools
             LuigiPipe.Instance.SendProcedure($"REPAIR;{RepairingItem.NetworkID};{Item2Repair.NetworkID}");
         }
 
-        public void ConfirmBuingStack(uint unknowArg = 0xFFFFFFFF)
+        public string ConfirmBuyingStack(uint unknowArg = 0xFFFFFFFF)
         {
-            LuigiPipe.Instance.SendProcedure($"CONFIRMBUY");
+           return LuigiPipe.Instance.SendFunction($"CONFIRMBUY");
         }
 
-        public void PutItemToBuy(int slot, int count)
+        public string PutItemToBuy(int slot, int count)
         {
-            LuigiPipe.Instance.SendProcedure($"ADDTOSTACK;{slot};{count}");
+           return LuigiPipe.Instance.SendFunction($"ADDTOSTACK;{slot};{count}");
         }
 
-        public void OpenShop(ushort npcId)
+        public string OpenShop(ushort npcId)
         {
-            LuigiPipe.Instance.SendProcedure($"OPENSHOP;{npcId}");
+            return LuigiPipe.Instance.SendFunction($"OPENSHOP;{npcId}");
         }
 
 

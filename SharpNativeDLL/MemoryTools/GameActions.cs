@@ -19,11 +19,11 @@ namespace CodeInject.MemoryTools
         private delegate void TalkWithNPC(long arg0, ushort npcIndex);
         private delegate void RepairItemAction(long networkClass, int itemNetID, int itemNetID2);
         private delegate long CreateBuyContext();
-        private delegate long UnknowFunctionForShopOpen();
         private delegate void OpenShopWindow(ushort npcId, int unknowArg);
         private delegate void SetItemToBuy(long context, int slotNumber, int count);
         [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
         private delegate void BuyStack(long context,int unknow1);
+        private delegate void RepaitWithNPC(long networkAddr, ushort unknowArg, int networkItemID);
 
         private delegate void PacketSendDelegate(long arg0, byte* packet);
 
@@ -43,8 +43,10 @@ namespace CodeInject.MemoryTools
         private CreateBuyContext CreateContextFunc;
         private SetItemToBuy SetItemToBuyFunc;
         private BuyStack BuyStackFunction;
-        private UnknowFunctionForShopOpen UnknowForShopOpenFunc;
         private OpenShopWindow OpenShopFunc;
+
+
+        private RepaitWithNPC RepairItemWithFunc;
 
         public Log LoggerFunc;
         private long BaseAddres;
@@ -61,11 +63,8 @@ namespace CodeInject.MemoryTools
         {
             BaseAddres = Process.GetCurrentProcess().MainModule.BaseAddress.ToInt64();
             BaseNetworkClass = MemoryTools.GetVariableAddres("48 8B 47 28 48 8D 4F 28 FF 90 D8 01 00 00 48 8B 0D ?? ?? ?? ??").ToInt64();//2023.10.03
-
             UseItemFunc = (UseItemAction)Marshal.GetDelegateForFunctionPointer((IntPtr)MemoryTools.GetFunctionAddress("40 53 48 83 ec 20 48 83 79 30 00 48 8b d9"), typeof(UseItemAction)); //MSG#INV5 
-
             AttackWithSkillFunc = (AttackWithSkillAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("4c 8d 44 24 20 8b d0 e8 ?? ?? ?? ??"), typeof(AttackWithSkillAction));
-
             NormalAttackFunc = (NormalAttackAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("48 8b cf e8 ?? ?? ?? ?? 84 c0 0f 84 ?? ?? ?? ?? 40 84 f6 0f 84 ?? ?? ?? ?? 48 8b 0d ?? ?? ?? ?? 8b d3 48 81 c1 ?? ?? ?? ?? e8 ?? ?? ?? ??"), typeof(NormalAttackAction));
 
             MoveToPointFunc = (MoveToAction)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres+0x5d3970), typeof(MoveToAction));
@@ -73,10 +72,9 @@ namespace CodeInject.MemoryTools
             CreateContextFunc = (CreateBuyContext)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x41d130), typeof(CreateBuyContext));
             SetItemToBuyFunc = (SetItemToBuy)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x41ce60), typeof(SetItemToBuy));
             BuyStackFunction = (BuyStack)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x41d5e0), typeof(BuyStack));
-            UnknowForShopOpenFunc = (UnknowFunctionForShopOpen)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x42f140), typeof(UnknowFunctionForShopOpen));
             OpenShopFunc = (OpenShopWindow)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x56C7C0), typeof(OpenShopWindow));
-
-
+            RepairItemWithFunc = (RepaitWithNPC)Marshal.GetDelegateForFunctionPointer(new IntPtr(BaseAddres + 0x5d4220), typeof(RepaitWithNPC));
+            
             PickUpFunc = (PickUpAction)Marshal.GetDelegateForFunctionPointer(MemoryTools.GetCallAddress("48 85 f6 74 ?? 48 8b 06 48 8b ce 48 8b 1d ?? ?? ?? ?? ff 50 ?? 0f bf 56 ?? 48 8d 8b ?? ?? ?? ?? 4c 8b c0 e8 ?? ?? ?? ??"), typeof(PickUpAction)); //MSG#INV4*/
         }
 
@@ -88,11 +86,17 @@ namespace CodeInject.MemoryTools
 
         public void OpenShopDialog(ushort npcId)
         {
-           // long arg0 = UnknowForShopOpenFunc();
-
-            OpenShopFunc(npcId, 1);
+            OpenShopFunc(npcId, 3);
         }
 
+
+        public void RepairItemWithNPC(int npcGameId, int networkItemID)
+        {
+            //to get net npc id i need do that [trose.exe+17C0508]+<game id>>*2+2000A
+            ushort netnpcId = *(ushort*)((*(long*)(BaseAddres + 0x17c0508)) + npcGameId*2+0x2000A) ;
+
+            RepairItemWithFunc((*(long*)(BaseNetworkClass) + 0x16b8), netnpcId, networkItemID);
+        }
 
         public void ConfirmBuingStack(int unknowArg = 0)
         {

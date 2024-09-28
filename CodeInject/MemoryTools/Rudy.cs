@@ -77,6 +77,24 @@ namespace Winebotv2.MemoryTools
             return "Could not read data from process";
         }
 
+        public uint ReadUInt(UIntPtr address)
+        {
+            byte[] buffer = new byte[4];
+            int bytesRead = 0;
+
+            bool success = ReadProcessMemory(processHandle, address, buffer, buffer.Length, out bytesRead);
+
+            if (success && bytesRead == buffer.Length)
+            {
+                return BitConverter.ToUInt32(buffer, 0);
+            }
+
+            return 0;
+            throw new Exception("Could not read int value from process");
+        }
+
+
+
         public int ReadInt(UIntPtr address)
         {
             byte[] buffer = new byte[4];

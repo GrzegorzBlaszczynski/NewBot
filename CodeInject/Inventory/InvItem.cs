@@ -38,6 +38,11 @@ namespace Winebotv2
         /// </summary>
         public short ItemType { get; set; }
 
+        public InvItem()
+        {
+
+        }
+
         public InvItem(long ItemDBAddr, long cItemAddr)
         {
             ObjectPointer = ItemDBAddr;

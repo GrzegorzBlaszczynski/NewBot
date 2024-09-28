@@ -28,6 +28,7 @@ namespace Winebotv2
             States.Add("STANDBY", standBy);
             States.Add("PICK", new PickUpState());
             States.Add("HUNT",new HuntState(new DefaultHunt()));
+            States.Add("WALK", new WalkState());
             SetState("STANDBY");
         }
 
